@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/activity_main"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <Button
+    android:id="@+id/btn_get_message"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="Get请求" />
+
+  <TextView
+    android:id="@+id/tv_result"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Hello World!"
+    android:textSize="14sp" />
+
+
+  <Button
+    android:id="@+id/btn_get_plan_message"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="获取服药计划" />
+
+  <Button
+    android:id="@+id/btn_get_medic_summary"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="获取商品码查询" />
+
+  <Button
+    android:id="@+id/btn_add_user_chat"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="添加用户聊天" />
+
+  <Button
+    android:id="@+id/btn_delete_user_relative"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="删除用户亲友" />
+</LinearLayout>
