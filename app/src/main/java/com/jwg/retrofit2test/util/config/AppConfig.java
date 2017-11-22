@@ -18,4 +18,8 @@ public class AppConfig {
     public static final String WEB_SERVICE_PATIENT_URL = XZL_DEBUG_BASE_URL + "patient/";
 
     public static final String WEB_APP_PLAN_URL = WEB_SERVICE_PATIENT_URL + "plan";
+
+    public static final String AVATAR_SCOPE_PATIENT = "PATIENT_AVATAR";
+
+
 }

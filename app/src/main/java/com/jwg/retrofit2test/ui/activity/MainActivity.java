@@ -1,5 +1,6 @@
-package com.jwg.retrofit2test;
+package com.jwg.retrofit2test.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.google.gson.Gson;
+import com.jwg.retrofit2test.R;
 import com.jwg.retrofit2test.database.sp.SharedPreferencesUtil;
 import com.jwg.retrofit2test.database.sp.UserInfoUtils;
 import com.jwg.retrofit2test.model.BaseResponseBean;
@@ -25,7 +27,8 @@ import rx.Subscriber;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private Button btn_get_message, btn_get_plan_message, btn_get_medic_summary,btn_add_user_chat,btn_add_user_chat_bean,btn_delete_user_relative;
+    private Button btn_get_message, btn_get_plan_message, btn_get_medic_summary, btn_add_user_chat, btn_add_user_chat_bean,
+            btn_delete_user_relative, btn_upload_user_avatar;
     private TextView tv_result;
 
     @Override
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         btn_add_user_chat = (Button) findViewById(R.id.btn_add_user_chat);
         btn_add_user_chat_bean = (Button) findViewById(R.id.btn_add_user_chat_bean);
         btn_delete_user_relative = (Button) findViewById(R.id.btn_delete_user_relative);
+        btn_upload_user_avatar = (Button) findViewById(R.id.btn_upload_user_avatar);
         btn_get_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onNext(SucLoginBean mSLBean) {
                                 Log.i("LHD", "onNext:  " + mSLBean.getAccess_token());
+                                tv_result.setText(mSLBean.getUid());
                                 if (!mSLBean.getUid().isEmpty()) {
                                     loginSuccess(mSLBean);
                                 }
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-        btn_add_user_chat.setOnClickListener(new View.OnClickListener(){
+        btn_add_user_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChatBean mChatBean = new ChatBean();
@@ -128,15 +133,15 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(BaseResponseBean baseResponseBean) {
-                          if(baseResponseBean.isSuccess()){
-                              Log.e(TAG, "==========添加成功！！！=======>");
-                          }
+                        if (baseResponseBean.isSuccess()) {
+                            Log.e(TAG, "==========添加成功！！！=======>");
+                        }
                     }
                 });
             }
         });
 
-        btn_add_user_chat_bean.setOnClickListener(new View.OnClickListener(){
+        btn_add_user_chat_bean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChatBean mChatBean = new ChatBean();
@@ -156,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(BaseResponseBean baseResponseBean) {
-                        if(baseResponseBean.isSuccess()){
+                        if (baseResponseBean.isSuccess()) {
                             Log.e(TAG, "==========添加成功！！！=======>");
                         }
                     }
@@ -164,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_delete_user_relative.setOnClickListener(new View.OnClickListener(){
+        btn_delete_user_relative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserRelativeRequestServer.DeleteUserRelativeChats("rpoBN5", new Subscriber<BaseResponseBean>() {
@@ -183,6 +188,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "==========删除成功！！！=======>");
                     }
                 });
+            }
+        });
+        btn_upload_user_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PhotoUploadActivity.class));
             }
         });
     }

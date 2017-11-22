@@ -9,7 +9,7 @@
     android:id="@+id/btn_get_message"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:text="Get请求" />
+    android:text="用户登录" />
 
   <TextView
     android:id="@+id/tv_result"
@@ -48,4 +48,10 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:text="删除用户亲友" />
+
+  <Button
+    android:id="@+id/btn_upload_user_avatar"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="上传图片" />
 </LinearLayout>

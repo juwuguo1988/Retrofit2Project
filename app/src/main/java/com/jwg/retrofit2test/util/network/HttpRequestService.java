@@ -1,8 +1,12 @@
 package com.jwg.retrofit2test.util.network;
 
 
+import com.jwg.retrofit2test.model.AvatarUploadResponseBean;
 import com.jwg.retrofit2test.model.BaseResponseBean;
 import com.jwg.retrofit2test.model.ChatBean;
+import com.jwg.retrofit2test.model.ImageConfirmRequestBean;
+import com.jwg.retrofit2test.model.ImageConfirmResponseBean;
+import com.jwg.retrofit2test.model.ImageUploadRequestBean;
 import com.jwg.retrofit2test.model.SucLoginAllDataBean;
 import com.jwg.retrofit2test.model.SucLoginBean;
 import com.jwg.retrofit2test.model.SucScanSearchBean;
@@ -17,7 +21,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -75,6 +81,18 @@ public interface HttpRequestService {
     @POST("patient/chat")
     Observable<BaseResponseBean> addUserChatBean(@Body ChatBean mChatBean);
 
+    //上传用户头像
+    @POST("patient/user/avatar")
+    Observable<AvatarUploadResponseBean> uploadUserAvatarBean(@Body ImageUploadRequestBean imageUploadRequestBean);
+
+    @PUT(".")//没有数据就写.或者/
+    @Headers("Content-Type: image/jpeg")
+    @Multipart
+    Observable<String> uploadPhotoFileToS3(@Part("file\"; filename=\"image.png\"") RequestBody img);
+
+    //上传用户头像确认
+    @PATCH("patient/user/avatar")
+    Observable<ImageConfirmResponseBean> uploadUserAvatarConfirm(@Body ImageConfirmRequestBean confirmBean);
 
     //删除用户亲友
     @DELETE("patient/user/relative/{id}")
@@ -96,7 +114,7 @@ public interface HttpRequestService {
     @GET("/weshare/ren/gtx/{iconfileid}/{userid}")
     Observable<Integer> saveUserIcon(@Path("iconfileid") String iconpath, @Path("userid") String userid);
 
-   // @GET("onebox/weather/query?cityname=深圳")
+    // @GET("onebox/weather/query?cityname=深圳")
     @GET("onebox/weather/query?")
     Call<WeatherBean> getWeather(@QueryMap Map<String, String> params);
 
