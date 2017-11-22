@@ -33,7 +33,7 @@ public class HttpMainRequestManager {
     public String HOST = "";
     private static final int TIMEOUT = 10;
     protected HttpRequestService httpService;
-    private volatile static HttpMainRequestManager sHttpLoginRequestManager;
+    private volatile static HttpMainRequestManager sHttpMainRequestManager;
 
     protected HttpMainRequestManager(String host) {
         this.HOST = host;
@@ -95,14 +95,14 @@ public class HttpMainRequestManager {
     }
 
     public static HttpMainRequestManager getInstance(String host) {
-        if (sHttpLoginRequestManager == null) {
+        if (sHttpMainRequestManager == null) {
             synchronized (HttpMainRequestManager.class) {
-                if (sHttpLoginRequestManager == null) {
-                    sHttpLoginRequestManager = new HttpMainRequestManager(host);
+                if (sHttpMainRequestManager == null) {
+                    sHttpMainRequestManager = new HttpMainRequestManager(host);
                 }
             }
         }
-        return sHttpLoginRequestManager;
+        return sHttpMainRequestManager;
     }
 
     /**

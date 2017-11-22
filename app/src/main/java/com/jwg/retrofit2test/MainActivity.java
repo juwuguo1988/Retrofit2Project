@@ -25,7 +25,7 @@ import rx.Subscriber;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private Button btn_get_message, btn_get_plan_message, btn_get_medic_summary,btn_add_user_chat,btn_delete_user_relative;
+    private Button btn_get_message, btn_get_plan_message, btn_get_medic_summary,btn_add_user_chat,btn_add_user_chat_bean,btn_delete_user_relative;
     private TextView tv_result;
 
     @Override
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btn_get_plan_message = (Button) findViewById(R.id.btn_get_plan_message);
         btn_get_medic_summary = (Button) findViewById(R.id.btn_get_medic_summary);
         btn_add_user_chat = (Button) findViewById(R.id.btn_add_user_chat);
+        btn_add_user_chat_bean = (Button) findViewById(R.id.btn_add_user_chat_bean);
         btn_delete_user_relative = (Button) findViewById(R.id.btn_delete_user_relative);
         btn_get_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +135,35 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        btn_add_user_chat_bean.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ChatBean mChatBean = new ChatBean();
+                mChatBean.setReceiver(UserInfoUtils.getDoctorId(MainActivity.this));
+                mChatBean.setType(0);
+                mChatBean.setContent("你在哪，还好吗？");
+                UserChatRequestServer.addUserChatsBean(mChatBean, new Subscriber<BaseResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseResponseBean baseResponseBean) {
+                        if(baseResponseBean.isSuccess()){
+                            Log.e(TAG, "==========添加成功！！！=======>");
+                        }
+                    }
+                });
+            }
+        });
+
         btn_delete_user_relative.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

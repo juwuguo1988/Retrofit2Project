@@ -38,6 +38,12 @@
     android:text="添加用户聊天" />
 
   <Button
+    android:id="@+id/btn_add_user_chat_bean"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="添加用户聊天实体" />
+
+  <Button
     android:id="@+id/btn_delete_user_relative"
     android:layout_width="match_parent"
     android:layout_height="50dp"

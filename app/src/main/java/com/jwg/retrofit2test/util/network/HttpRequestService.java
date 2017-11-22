@@ -2,9 +2,12 @@ package com.jwg.retrofit2test.util.network;
 
 
 import com.jwg.retrofit2test.model.BaseResponseBean;
+import com.jwg.retrofit2test.model.ChatBean;
 import com.jwg.retrofit2test.model.SucLoginAllDataBean;
 import com.jwg.retrofit2test.model.SucLoginBean;
 import com.jwg.retrofit2test.model.SucScanSearchBean;
+import com.jwg.retrofit2test.model.WeatherBean;
+import java.util.Map;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,10 +21,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
- * Created by marks on 2016/8/5.
+ * http://blog.csdn.net/qq_26787115/article/details/53034267
  */
 public interface HttpRequestService {
 
@@ -67,6 +71,10 @@ public interface HttpRequestService {
     @POST("patient/chat")
     Observable<BaseResponseBean> addUserChat(@Body RequestBody datas);
 
+    //添加用户聊天
+    @POST("patient/chat")
+    Observable<BaseResponseBean> addUserChatBean(@Body ChatBean mChatBean);
+
 
     //删除用户亲友
     @DELETE("patient/user/relative/{id}")
@@ -87,6 +95,10 @@ public interface HttpRequestService {
     //3.3 上传头像修改信息
     @GET("/weshare/ren/gtx/{iconfileid}/{userid}")
     Observable<Integer> saveUserIcon(@Path("iconfileid") String iconpath, @Path("userid") String userid);
+
+   // @GET("onebox/weather/query?cityname=深圳")
+    @GET("onebox/weather/query?")
+    Call<WeatherBean> getWeather(@QueryMap Map<String, String> params);
 
     //上传头像
     @Multipart

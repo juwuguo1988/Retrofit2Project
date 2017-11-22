@@ -7,9 +7,9 @@ import rx.Subscriber;
 
 public class MedicineSummaryRequestServer {
 
-    private static HttpMainRequestManager sHttpLoginRequestManager = HttpMainRequestManager.getInstance(AppConfig.XZL_DEBUG_BASE_URL);
+    private static HttpMainRequestManager sHttpMainRequestManager = HttpMainRequestManager.getInstance(AppConfig.XZL_DEBUG_BASE_URL);
 
     public static void getMedicineSummary(String code, Subscriber<SucScanSearchBean> subscriber) {
-        sHttpLoginRequestManager.doHttpRequest(sHttpLoginRequestManager.getHttpService().getMedicineSsummary(code), subscriber);
+        sHttpMainRequestManager.doHttpRequest(sHttpMainRequestManager.getHttpService().getMedicineSsummary(code), subscriber);
     }
 }

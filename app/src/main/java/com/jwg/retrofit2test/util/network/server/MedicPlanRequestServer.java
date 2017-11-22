@@ -7,9 +7,9 @@ import rx.Subscriber;
 
 public class MedicPlanRequestServer {
 
-    private static HttpMainRequestManager sHttpLoginRequestManager = HttpMainRequestManager.getInstance(AppConfig.XZL_DEBUG_BASE_URL);
+    private static HttpMainRequestManager sHttpMainRequestManager = HttpMainRequestManager.getInstance(AppConfig.XZL_DEBUG_BASE_URL);
 
     public static void getMedicPlans(Subscriber<SucLoginAllDataBean> subscriber) {
-        sHttpLoginRequestManager.doHttpRequest(sHttpLoginRequestManager.getHttpService().getALLMedicPlans(), subscriber);
+        sHttpMainRequestManager.doHttpRequest(sHttpMainRequestManager.getHttpService().getALLMedicPlans(), subscriber);
     }
 }
