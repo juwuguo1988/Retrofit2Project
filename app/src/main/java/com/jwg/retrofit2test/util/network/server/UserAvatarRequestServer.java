@@ -1,6 +1,5 @@
 package com.jwg.retrofit2test.util.network.server;
 
-import android.util.Log;
 import com.jwg.retrofit2test.model.AvatarUploadResponseBean;
 import com.jwg.retrofit2test.model.ImageConfirmRequestBean;
 import com.jwg.retrofit2test.model.ImageConfirmResponseBean;
@@ -25,22 +24,18 @@ public class UserAvatarRequestServer {
                 .doHttpRequest(sHttpMainRequestManager.getHttpService().uploadUserAvatarBean(imageUploadRequestBean), subscriber);
     }
 
-
     public static void uploadUserAvatarRoad(ImageUploadRequestBean imageUploadRequestBean,
             final File mCropPhotoFile, Subscriber<ImageConfirmResponseBean> subscriber) {
-        Observable<AvatarUploadResponseBean> observableAvatar = sHttpMainRequestManager.getHttpService()
-                .uploadUserAvatarBean(imageUploadRequestBean);
-
         sHttpMainRequestManager
-                .doHttpRequest(observableAvatar.flatMap(new Func1<AvatarUploadResponseBean, Observable<String>>() {
+                .doHttpRequest(sHttpMainRequestManager.getHttpService()
+                        .uploadUserAvatarBean(imageUploadRequestBean).flatMap(new Func1<AvatarUploadResponseBean, Observable<String>>() {
                     @Override
                     public Observable<String> call(AvatarUploadResponseBean avatarUploadResponseBean) {
                         RequestBody requestBody =
                                 RequestBody.create(MediaType.parse("multipart/form-data"), mCropPhotoFile);
                         awsId = avatarUploadResponseBean.data.uploadData.awsId;
-                        Log.e("=========signUrl====", "======" + avatarUploadResponseBean.data.uploadData.signUrl);
-                        return HttpMainRequestManager.getInstance(avatarUploadResponseBean.data.uploadData.signUrl).getHttpService()
-                                .uploadPhotoFileToS3(requestBody);
+                        return sHttpMainRequestManager.getHttpService()
+                                .uploadPhotoFileToS3(avatarUploadResponseBean.data.uploadData.signUrl, requestBody);
                     }
                 }).flatMap(new Func1<String, Observable<ImageConfirmResponseBean>>() {
                     @Override
@@ -49,30 +44,6 @@ public class UserAvatarRequestServer {
                         return sHttpMainRequestManager.getHttpService().uploadUserAvatarConfirm(confirmBean);
                     }
                 }), subscriber);
-
-
-       /* observableAvatar.flatMap(new Func1<AvatarUploadResponseBean, Observable<String>>() {
-            @Override
-            public Observable<String> call(AvatarUploadResponseBean avatarUploadResponseBean) {
-                RequestBody requestBody =
-                        RequestBody.create(MediaType.parse("multipart/form-data"), mCropPhotoFile);
-                awsId = avatarUploadResponseBean.data.uploadData.awsId;
-                return HttpMainRequestManager.getInstance(avatarUploadResponseBean.data.uploadData.signUrl).getHttpService()
-                        .uploadPhotoFileToS3(requestBody);
-            }
-        }).flatMap(new Func1<String, Observable<ImageConfirmResponseBean>>() {
-            @Override
-            public Observable<ImageConfirmResponseBean> call(String s) {
-                ImageConfirmRequestBean confirmBean = new ImageConfirmRequestBean(awsId);
-                return sHttpMainRequestManager.getHttpService().uploadUserAvatarConfirm(confirmBean);
-            }
-        }).subscribe(new Action1<ImageConfirmResponseBean>() {
-            @Override
-            public void call(ImageConfirmResponseBean imageConfirmResponseBean) {
-                String url = imageConfirmResponseBean.data.url;
-                Log.d(TAG, "======url======>" + url);
-            }
-        });*/
     }
 
 }

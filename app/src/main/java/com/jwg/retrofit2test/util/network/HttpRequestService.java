@@ -28,6 +28,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -85,10 +86,10 @@ public interface HttpRequestService {
     @POST("patient/user/avatar")
     Observable<AvatarUploadResponseBean> uploadUserAvatarBean(@Body ImageUploadRequestBean imageUploadRequestBean);
 
-    @PUT(".")//没有数据就写.或者/
+    @PUT//没有数据就写.或者/
     @Headers("Content-Type: image/jpeg")
     @Multipart
-    Observable<String> uploadPhotoFileToS3(@Part("file\"; filename=\"image.png\"") RequestBody img);
+    Observable<String> uploadPhotoFileToS3(@Url String url,@Part("file\"; filename=\"image.jpg\"") RequestBody img);
 
     //上传用户头像确认
     @PATCH("patient/user/avatar")
